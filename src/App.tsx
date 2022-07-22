@@ -1,24 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Header from './components/Header/Header';
+import Aside from './components/Aside/Aside';
+import Main from './components/Main/Main';
+import classes from './App.module.css'
+import { fetchHotels } from './store/actionsCreater';
+
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from 'react';
 
 function App() {
+  const dispatch = useDispatch()
+
+  const data = useSelector((state: any) => state.favoritesHotels)
+  console.log(data)
+
+  useEffect(() => {
+    dispatch(fetchHotels())
+  })
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={classes.main}>
+      <Header />
+      <div className={classes.content}>
+        <Aside />
+        <Main />
+      </div>
     </div>
   );
 }

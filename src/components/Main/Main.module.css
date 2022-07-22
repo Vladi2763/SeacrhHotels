@@ -1,0 +1,36 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    margin-left: 24px;
+    padding: 48px 32px 52px 32px;
+    width: 664px;
+    height: 902px;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 33px rgba(0, 0, 0, 0.04);
+    border-radius: 16px;
+}
+
+.containerCity {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 28px;
+}
+
+.choosenCity {
+    font-size: 32px;
+    line-height: 38px;
+    color: #424242;
+}
+
+.date {
+    font-size: 24px;
+    line-height: 28px;
+    color: #41522E;
+}
+
+.countFavorites {
+    font-size: 17px;
+    line-height: 22px;
+    letter-spacing: -0.408px;
+    color: #424242;
+}
