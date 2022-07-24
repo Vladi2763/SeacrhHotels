@@ -10,6 +10,7 @@ const Main = () => {
 
     const choosenCity = useSelector((state: InitialState) => state.choosenCity)
     const date = useSelector((state: InitialState) => state.checkIn)
+    const amountFavoritesHotels = useSelector((state : InitialState) => state.favoritesHotels.length)
 
     const checkIn = changeDate(date)
     
@@ -21,7 +22,7 @@ const Main = () => {
             </div>
             <div id='carousel'>
             </div>
-            <span className={classes.countFavorites}>Добавлено в Избранное: отеля</span>
+            <span className={classes.countFavorites}>Добавлено в Избранное: {amountFavoritesHotels} отеля</span>
             <Hotels />
         </main>
     )

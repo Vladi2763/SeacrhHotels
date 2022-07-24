@@ -1,4 +1,7 @@
 import getDate, { getDateOut } from '../otherFuncs/getDate'
+import toggleLikeHotel from '../otherFuncs/toggleLikeHotel'
+import contains from '../otherFuncs/contains'
+import removeFavorite from '../otherFuncs/removeFavorite'
 
 type Geo = {
     lat: number,
@@ -20,12 +23,13 @@ export type Hotel = {
     priceAvg: number,
     priceFrom: number
     pricePercentile: any,
-    stars: number
+    stars: number,
+    like?: boolean
 }
 
 export type InitialState = {
     hotels: Array<Hotel>,
-    favoritesHotels?: Array<Hotel>,
+    favoritesHotels: Array<Hotel>,
     choosenCity: string,
     amountOfDays: number | string,
     carousel: Array<string>,
@@ -44,13 +48,14 @@ export type Action = {
         amountDays: string,
         date: string
     },
-    hotel: Hotel
+    hotel: Hotel,
+    index: number
 }
 
 const initialState: InitialState = {
     hotels: [],
     favoritesHotels: [],
-    choosenCity: 'Moscow',
+    choosenCity: 'Москва',
     amountOfDays: 1,
     checkIn: getDate(),
     checkOut: getDateOut(),
@@ -66,9 +71,22 @@ const initialState: InitialState = {
 const mainReducer = (state = initialState, action: Action) => {
     switch (action.type) {
         case 'SET_HOTELS': {
+
+            let hotels = [];
+
+            const favoritesHotels = state.favoritesHotels;
+
+            const currentHotels = action.payload;
+
+            if (favoritesHotels.length) {
+                hotels = contains(currentHotels, favoritesHotels);
+            } else {
+                hotels = currentHotels;
+            }
+
             return {
                 ...state,
-                hotels: [...action.payload]
+                hotels: [...hotels]
             }
         }
 
@@ -79,7 +97,6 @@ const mainReducer = (state = initialState, action: Action) => {
             const year = date.getFullYear();
             const month = (date.getMonth() + 1) < 10 ? 0 + (date.getMonth() + 1).toString() : date.getMonth() + 1;
             const day = date.getDate()
-
 
             const dateCheckOut = new Date(action.data.date)
             dateCheckOut.setDate(dateCheckOut.getDate() + (+action.data.amountDays));
@@ -100,19 +117,93 @@ const mainReducer = (state = initialState, action: Action) => {
         case 'TOGGLE_LIKE': {
 
             const favoritesHotels = state.favoritesHotels;
-            let hotels: Array<Hotel> | any = []
+            let hotels: any = []
 
-            if (!state.favoritesHotels?.find((item) => item.hotelId === action.hotel.hotelId)) {
+            const newHotel = toggleLikeHotel(action.hotel)
 
-                hotels = favoritesHotels!.concat(action.hotel)
-            } else if (state.favoritesHotels?.find((item) => item.hotelId === action.hotel.hotelId)) {
-                hotels = favoritesHotels?.filter((hotel) => hotel.hotelId !== action.hotel.hotelId)
+            const currentHotels = state.hotels
+
+            currentHotels[action.index] = newHotel;
+
+            if (!state.favoritesHotels?.find((item) => item.hotelId === newHotel.hotelId)) {
+
+                hotels = favoritesHotels!.concat(newHotel)
+            } else if (state.favoritesHotels?.find((item) => item.hotelId === newHotel.hotelId)) {
+                hotels = favoritesHotels?.filter((hotel) => hotel.hotelId !== newHotel.hotelId)
             }
+
+            return {
+                ...state,
+                hotels: [...currentHotels],
+                favoritesHotels: [...hotels]
+            }
+        }
+
+        case 'SORT_RATING_FROM_MAX': {
+
+            const hotels = state.favoritesHotels;
+
+            hotels.sort((a, b) => b.stars - a.stars)
 
             return {
                 ...state,
                 favoritesHotels: [...hotels]
             }
+        }
+
+        case 'SORT_RATING_FROM_MIN': {
+
+            const hotels = state.favoritesHotels;
+
+            hotels.sort((a, b) => a.stars - b.stars)
+
+            return {
+                ...state,
+                favoritesHotels: [...hotels]
+            }
+        }
+
+        case 'SORT_PRICES_FROM_MAX': {
+            const hotels = state.favoritesHotels;
+
+            hotels.sort((a, b) => b.priceFrom - a.priceFrom)
+
+            return {
+                ...state,
+                favoritesHotels: [...hotels]
+            }
+        }
+
+        case 'SORT_PRICES_FROM_MIN': {
+            const hotels = state.favoritesHotels;
+
+            hotels.sort((a, b) => a.priceFrom - b.priceFrom)
+
+            return {
+                ...state,
+                favoritesHotels: [...hotels]
+            }
+        }
+
+        case 'REMOVE_FROM_FAVORITES': {
+
+            let hotels: any = [];
+            const currentHotels = state.hotels;
+            let newCurrentHotels = [];
+            const favoritesHotels = state.favoritesHotels;
+
+            if (state.favoritesHotels?.find((item) => item.hotelId === action.hotel.hotelId)) {
+                hotels = favoritesHotels?.filter((hotel) => hotel.hotelId !== action.hotel.hotelId)
+
+                newCurrentHotels = removeFavorite(currentHotels, action.hotel)
+            }
+
+            return {
+                ...state,
+                favoritesHotels: [...hotels],
+                hotels: [...newCurrentHotels],
+            }
+
         }
 
         default:

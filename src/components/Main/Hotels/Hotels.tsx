@@ -12,7 +12,7 @@ const Hotels = () => {
     return (
         <div className={classes.hotels}>
             {hotels.map((hotel, index: number) => (
-                <Hotel key={index} name={hotel.hotelName} price={hotel.priceFrom} stars={hotel.stars} hotel={hotel}/>
+                <Hotel key={index} index={index} name={hotel.hotelName} price={hotel.priceFrom} stars={hotel.stars} hotel={hotel} />
             ))}
         </div>
     )

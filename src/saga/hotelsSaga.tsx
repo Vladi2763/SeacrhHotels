@@ -1,10 +1,8 @@
 import { put, takeEvery, call } from 'redux-saga/effects'
-import { fetchHotels } from '../../otherFuncs/request'
-import { setHotels } from '../../store/actionsCreater';
+import { fetchHotels } from '../otherFuncs/request'
+import { setHotels } from '../store/actionsCreater';
 
-import store from '../../store';
-
-
+import store from '../store';
 
 function* fetchHotelsWorker() {
     const choosenCity = store.getState().choosenCity;
@@ -12,7 +10,6 @@ function* fetchHotelsWorker() {
     const checkOut = store.getState().checkOut
     
     const data = yield call(() => fetchHotels(choosenCity, checkIn, checkOut));
-    console.log(data)
     yield put(setHotels(data))
     
 }

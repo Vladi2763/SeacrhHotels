@@ -33,7 +33,7 @@ const Location = () => {
         <div className={classes.location}>
             <form onSubmit={submitHandler}>
                 <label className={classes.label}>Локация</label>
-                <input className={classes.input} ref={enteredCity} type='text' defaultValue='Moscow'></input>
+                <input className={classes.input} ref={enteredCity} type='text' defaultValue='Москва'></input>
                 <label className={classes.label}>Дата заселения</label>
                 <MaterialUIPickers setDate={setDateChekIn}/>
                 <label className={classes.label}>Количество дней</label>

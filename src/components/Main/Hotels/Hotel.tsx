@@ -9,21 +9,19 @@ import { InitialState, Hotel as HotelType } from "../../../store/mainReducer";
 import { toggleFavoritesHotel } from "../../../store/actionsCreater";
 import { useState } from "react";
 
-const Hotel: React.FC<{ name: string, price: number, stars: number, hotel: HotelType }> = (props) => {
+const Hotel: React.FC<{ name: string, price: number, stars: number, hotel: HotelType, index: number }> = (props) => {
     const dispatch = useDispatch()
 
     const date = useSelector((state: InitialState) => state.checkIn);
     const amountDays = useSelector((state: InitialState) => state.amountOfDays);
-    const [favoriteHotel, toggleFavoriteHotel] = useState(false)
 
     const checkIn = changeDate(date)
     const price = props.price.toFixed(0)
 
-    const likeToggleHandler = (hotel: HotelType) => {
-        dispatch(toggleFavoritesHotel(hotel))
-        toggleFavoriteHotel((state) => !state)
+    const likeToggleHandler = (hotel: HotelType, index: number) => {
+        dispatch(toggleFavoritesHotel(hotel, index))
     }
-
+    
     return (
         <div className={classes.hotel}>
             <div className={classes.containerImg}>
@@ -32,7 +30,7 @@ const Hotel: React.FC<{ name: string, price: number, stars: number, hotel: Hotel
             <div className={classes.container}>
                 <div className={classes.containerName}>
                     <span className={classes.name}>{props.name}</span>
-                    <img onClick={() => likeToggleHandler(props.hotel)} src={favoriteHotel ? '/images/favoriteheart.svg' : '/images/heart.svg'} alt='heart'></img>
+                    <img onClick={() => likeToggleHandler(props.hotel, props.index)} src={props.hotel.like ? '/images/favoriteheart.svg' : '/images/heart.svg'} alt='heart'></img>
                 </div>
                 <div className={classes.containerDate}>
                     <span className={classes.date}>{checkIn.day} {checkIn.month} {checkIn.year}</span>
