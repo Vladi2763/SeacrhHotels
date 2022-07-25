@@ -29,6 +29,11 @@
     color: #41522E;
 }
 
+.carousel {
+    width: 100%;
+    margin-bottom: 28px;
+}
+
 .countFavorites {
     font-size: 17px;
     line-height: 22px;

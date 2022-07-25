@@ -17,6 +17,7 @@
 .containerName img {
     width: 21px;
     height: 18px;
+    cursor: pointer;
 }
 
 .name {

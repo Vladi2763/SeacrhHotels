@@ -14,6 +14,9 @@ const Favorites = () => {
     const [isMaxMin, setIsMaxMin] = useState(true);
     const [isMaxMinRating, setIsMaxMinRating] = useState(true);
 
+    const [stateRating, toggleStateRating] = useState(false);
+    const [statePrice, toggleStatePrice] = useState(false);
+
     const favoritesHotels = useSelector((state: InitialState) => {
         const hotels = state.favoritesHotels;
         if (!hotels) {
@@ -24,17 +27,28 @@ const Favorites = () => {
     }
     )
 
+
     const sortRatingHandler = () => {
+
+        toggleStateRating(true);
+        toggleStatePrice(false);
+
         if (isMaxMinRating) {
+            setIsMaxMinRating((prev) => !prev)
             dispatch(sortByRatingFromMax())
-            setIsMaxMinRating(false)
-        } else {
+        }
+
+        if (!isMaxMinRating) {
             dispatch(sortByRatingFromMin())
-            setIsMaxMinRating(true)
+            setIsMaxMinRating((prev) => !prev)
         }
     }
 
     const sortPricesHandler = () => {
+
+        toggleStateRating(false);
+        toggleStatePrice(true);
+
         if (isMaxMin) {
             dispatch(sortByPricesFromMax())
             setIsMaxMin(false)
@@ -42,15 +56,14 @@ const Favorites = () => {
             dispatch(sortByPricesFromMin())
             setIsMaxMin(true)
         }
-
     }
 
     return (
         <div className={classes.favorites}>
             <span className={classes.title}>Избранное</span>
             <div className={classes.container}>
-                <div onClick={sortRatingHandler} className={classes.toggle}>Рейтинг</div>
-                <div onClick={sortPricesHandler} className={classes.toggle}>Цена</div>
+                <div onClick={sortRatingHandler} className={stateRating ? (classes.toggle + ' ' + classes.toggleActive) : classes.toggle}>Рейтинг</div>
+                <div onClick={sortPricesHandler} className={statePrice ? (classes.toggle + ' ' + classes.toggleActive) : classes.toggle}>Цена</div>
             </div>
             <div>
                 {favoritesHotels.map((hotel, index) => (

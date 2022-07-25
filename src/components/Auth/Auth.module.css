@@ -26,8 +26,8 @@
     border-radius: 16px;
     padding: 32px;
     position: absolute;
-    left:50%;
-    top:50%;
+    left: 50%;
+    top: 50%;
     transform: translate(-50%, -50%)
 }
 
@@ -52,7 +52,7 @@
     border: 1px solid #C9CACC;
     border-radius: 4px;
     margin-top: 7px;
-    padding-left: 5px;
+    padding: 15px;
 }
 
 .input:nth-child(2) {
@@ -70,4 +70,31 @@
     color: #FFFFFF;
     margin-top: 32px;
     cursor: pointer;
+    border: none;
+}
+
+.button:hover {
+    background: linear-gradient(0deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), linear-gradient(104.34deg, #41522E -15.34%, #BE8022 145.95%);
+    border-radius: 4px;
+}
+
+.button:active {
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), linear-gradient(104.34deg, #41522E -15.34%, #BE8022 145.95%);
+    border-radius: 4px;
+}
+
+.error {
+    font-size: 12px;
+    line-height: 14px;
+    color: #EB1717;
+}
+
+.errorValue {
+    font-size: 16px;
+    line-height: 18px;
+    color: #EB1717;
+}
+
+.error:nth-child(3) {
+    margin-top: -14px;
 }

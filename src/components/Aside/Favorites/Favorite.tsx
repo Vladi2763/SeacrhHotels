@@ -2,9 +2,9 @@ import { Hotel, InitialState } from "../../../store/mainReducer";
 import { useDispatch, useSelector } from "react-redux";
 
 import changeDate from "../../../otherFuncs/changeDate";
-import { removeFromFavorites, toggleFavoritesHotel } from "../../../store/actionsCreater";
+import { removeFromFavorites } from "../../../store/actionsCreater";
 
-import BasicRating from "../../Main/Hotels/Rating";
+import BasicRating from "../../Rating";
 
 import classes from './Favorite.module.css'
 

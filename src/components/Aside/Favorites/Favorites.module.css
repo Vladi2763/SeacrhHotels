@@ -20,6 +20,10 @@
     margin-top: 32px;
 }
 
+.container div {
+    cursor: pointer;
+}
+
 .toggle {
     padding-left: 8px;
     padding-top: 4px;
@@ -27,12 +31,12 @@
     width: 89px;
     height: 28px;
     background: #FFFFFF;
-    border: 1px solid #41522E;
+    border: 1px solid #E5E5E5;
     border-radius: 4px;
     font-size: 14px;
     line-height: 20px;
     letter-spacing: -0.408px;
-    color: #41522E;
+    color: #99A0A3;
     background-image: url('/assets/select.svg');
     background-repeat: no-repeat;
     background-position: right 5px;
@@ -40,4 +44,9 @@
 
 .toggle:first-child {
     margin-right: 8px;
+}
+
+.toggleActive {
+    border: 1px solid #41522E;
+    color: #41522E;
 }

@@ -1,4 +1,4 @@
-import BasicRating from "./Rating";
+import BasicRating from "../../Rating";
 
 import { useSelector, useDispatch } from "react-redux";
 import changeDate from "../../../otherFuncs/changeDate";
@@ -7,7 +7,6 @@ import classes from './Hotel.module.css'
 import { InitialState, Hotel as HotelType } from "../../../store/mainReducer";
 
 import { toggleFavoritesHotel } from "../../../store/actionsCreater";
-import { useState } from "react";
 
 const Hotel: React.FC<{ name: string, price: number, stars: number, hotel: HotelType, index: number }> = (props) => {
     const dispatch = useDispatch()

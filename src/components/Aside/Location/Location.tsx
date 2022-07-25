@@ -13,6 +13,7 @@ const Location = () => {
     
     const [dateCheckIn, setDateChekIn] = useState(new Date(useSelector((state: InitialState) => state.checkIn)).toISOString())
     const dispatch = useDispatch()
+    const choosenCity = useSelector((state:InitialState) => state.choosenCity)
 
     const enteredCity = useRef<HTMLInputElement>(null);
     const enteredDays = useRef<HTMLInputElement>(null)
@@ -23,6 +24,7 @@ const Location = () => {
         const checkIn = dateCheckIn;
         const city = enteredCity.current!.value;
         const amountDays = enteredDays.current!.value;
+        
 
         dispatch(setSearchingParametr({city: city, amountDays: amountDays, date: checkIn}))
 
@@ -33,7 +35,7 @@ const Location = () => {
         <div className={classes.location}>
             <form onSubmit={submitHandler}>
                 <label className={classes.label}>Локация</label>
-                <input className={classes.input} ref={enteredCity} type='text' defaultValue='Москва'></input>
+                <input className={classes.input} ref={enteredCity} type='text' defaultValue={choosenCity}></input>
                 <label className={classes.label}>Дата заселения</label>
                 <MaterialUIPickers setDate={setDateChekIn}/>
                 <label className={classes.label}>Количество дней</label>

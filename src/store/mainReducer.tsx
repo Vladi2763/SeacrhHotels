@@ -3,6 +3,10 @@ import toggleLikeHotel from '../otherFuncs/toggleLikeHotel'
 import contains from '../otherFuncs/contains'
 import removeFavorite from '../otherFuncs/removeFavorite'
 
+const getTokenFromLocal = (): any => {
+    return localStorage.getItem('token') || null
+}
+
 type Geo = {
     lat: number,
     lon: number
@@ -35,6 +39,7 @@ export type InitialState = {
     carousel: Array<string>,
     checkIn: string,
     checkOut: string,
+    token: string
 }
 
 export type Action = {
@@ -49,7 +54,8 @@ export type Action = {
         date: string
     },
     hotel: Hotel,
-    index: number
+    index: number,
+    token: string
 }
 
 const initialState: InitialState = {
@@ -64,7 +70,8 @@ const initialState: InitialState = {
         '/images/carousel2.svg',
         '/images/carousel3.svg',
         '/images/carousel4.svg'
-    ]
+    ],
+    token: getTokenFromLocal()
 }
 
 
@@ -96,14 +103,15 @@ const mainReducer = (state = initialState, action: Action) => {
 
             const year = date.getFullYear();
             const month = (date.getMonth() + 1) < 10 ? 0 + (date.getMonth() + 1).toString() : date.getMonth() + 1;
-            const day = date.getDate()
+            const day = date.getDate() < 10 ? '0'+date.getDate() : date.getDate()
 
             const dateCheckOut = new Date(action.data.date)
             dateCheckOut.setDate(dateCheckOut.getDate() + (+action.data.amountDays));
 
+            console.log(dateCheckOut)
             const yearOut = dateCheckOut.getFullYear();
             const monthOut = (dateCheckOut.getMonth() + 1) < 10 ? 0 + (dateCheckOut.getMonth() + 1).toString() : dateCheckOut.getMonth() + 1;
-            const dayOut = dateCheckOut.getDate()
+            const dayOut = dateCheckOut.getDate() < 10 ? '0'+dateCheckOut.getDate() : dateCheckOut.getDate()
 
             return {
                 ...state,
@@ -204,6 +212,24 @@ const mainReducer = (state = initialState, action: Action) => {
                 hotels: [...newCurrentHotels],
             }
 
+        }
+
+        case 'LOGIN': {
+
+            console.log(action.token)
+
+            localStorage.setItem('token', action.token)
+
+            return {
+                ...state,
+                token: action.token
+            }
+        }
+
+        case 'LOGOUT': {
+            return {
+                ...state,
+            }
         }
 
         default:

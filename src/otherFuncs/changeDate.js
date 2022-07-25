@@ -1,7 +1,5 @@
 const changeDate = (data) => {
 
-    const dat = '2022-07-27'
-
     const date = new Date(data)
 
     const day = date.getDate();

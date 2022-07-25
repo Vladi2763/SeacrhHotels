@@ -58,3 +58,16 @@ export const removeFromFavorites = (hotel: Hotel) => {
         hotel
     }
 }
+
+export const loginPage = (token: string) => {
+    return {
+        type: 'LOGIN',
+        token
+    }
+}
+
+export const logout = () => {
+    return {
+        type: 'LOGOUT',
+    }
+}

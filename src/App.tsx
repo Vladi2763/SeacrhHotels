@@ -1,30 +1,40 @@
-import Header from './components/Header/Header';
-import Aside from './components/Aside/Aside';
-import Main from './components/Main/Main';
-import classes from './App.module.css'
-import { fetchHotels} from './store/actionsCreater';
+
+import AuthPage from './components/Pages/AuthPage';
+import MainContentPage from './components/Pages/MainContentPage';
+
+import { fetchHotels } from './store/actionsCreater';
 
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { Outlet, Navigate, Routes, Route } from 'react-router-dom';
+
+import { InitialState } from './store/mainReducer';
 
 function App() {
+
+  const Protected = () => {
+    const isLoggedIn = useSelector((state: InitialState) => !!state.token)
+    return isLoggedIn ? <Outlet /> : <Navigate to="/auth" />;
+  }
+
   const dispatch = useDispatch()
-  const data = useSelector((state: any) => state.favoritesHotels)
-  console.log(data)
 
   useEffect(() => {
     dispatch(fetchHotels())
-  }, [])
+  }, [dispatch])
 
 
   return (
-    <div className={classes.main}>
-      <Header />
-      <div className={classes.content}>
-        <Aside />
-        <Main />
-      </div>
-    </div>
+    <React.Fragment>
+      <Routes>
+        <Route path='/' element={<Protected />} >
+          <Route path='/' element={<Navigate to="/main" />} />
+          <Route path='/main' element={<MainContentPage />}></Route>
+        </Route>
+        <Route path='/auth' element={<AuthPage />} />
+      </Routes>
+    </React.Fragment>
+
   );
 }
 
