@@ -6,7 +6,7 @@ import { removeFromFavorites } from "../../../store/actionsCreater";
 
 import BasicRating from "../../Rating";
 
-import classes from './Favorite.module.css'
+import classes from './Favorite.module.css';
 
 
 const Favorite: React.FC<{ hotel: Hotel }> = (props) => {
