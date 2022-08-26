@@ -1,24 +1,25 @@
-import * as React from 'react';
-import Stack from '@mui/material/Stack';
-import TextField from '@mui/material/TextField';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-import { useSelector } from 'react-redux';
+import * as React from "react";
+import Stack from "@mui/material/Stack";
+import TextField from "@mui/material/TextField";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
+import { useSelector } from "react-redux";
 
-import { InitialState } from '../../../store/mainReducer';
+import { MainReducer } from "../../../store/mainReducer";
 
-export default function MaterialUIPickers(props: any) {
-  const checkIn = new Date(useSelector((state: InitialState) => state.checkIn)).toISOString()
-  
+const MaterialUIPickers: React.FC<{ setDate: (arg: Date | null) => void }> = (
+  props
+) => {
+  const checkIn = new Date(
+    useSelector((state: MainReducer) => state.hotels.checkIn)
+  ).toISOString();
 
-  const [value, setValue] = React.useState<Date | null>(
-    new Date(checkIn),
-  );
+  const [value, setValue] = React.useState<Date | null>(new Date(checkIn));
 
   const handleChange = (newValue: Date | null) => {
     setValue(newValue);
-    props.setDate(newValue)
+    props.setDate(newValue);
   };
 
   return (
@@ -33,4 +34,6 @@ export default function MaterialUIPickers(props: any) {
       </Stack>
     </LocalizationProvider>
   );
-}
+};
+
+export default MaterialUIPickers;

@@ -1,16 +1,16 @@
-import toggleLikeHotel from "./toggleLikeHotel"
+import toggleLikeHotel from "./toggleLikeHotel";
 
 const removeFavorite = (currentHotels, favoriteHotel) => {
-    let arr = []
+  let arr = [];
 
-    for (let i = 0; i < currentHotels.length; i++) {
-        if (currentHotels[i].hotelId === favoriteHotel.hotelId) {
-            arr.push(toggleLikeHotel(currentHotels[i]));
-        } else {
-            arr.push(currentHotels[i])
-        }
+  for (let i = 0; i < currentHotels.length; i++) {
+    if (currentHotels[i].hotelId === favoriteHotel.hotelId) {
+      arr.push(toggleLikeHotel(currentHotels[i]));
+    } else {
+      arr.push(currentHotels[i]);
     }
-    return arr;
-}
+  }
+  return arr;
+};
 
 export default removeFavorite;

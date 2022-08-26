@@ -3,10 +3,9 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 import 'swiper/css';
 
-
 const Carousel = () => {
 
-	const images = useSelector((state) => state.carousel)
+	const images = useSelector((state) => state.hotels.carousel)
 	return (
 		<Swiper
 			spaceBetween={12}

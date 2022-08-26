@@ -1,7 +1,7 @@
 import Auth from "../Auth/Auth";
 
 const AuthPage = () => {
-    return <Auth />
-}
+  return <Auth />;
+};
 
 export default AuthPage;

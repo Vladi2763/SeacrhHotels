@@ -3,14 +3,12 @@ import { fetchHotels } from "../otherFuncs/request";
 import { setHotels } from "../store/actionsCreater";
 
 import store from "../store";
-import { Action } from "../store/mainReducer";
+import { Action } from "../store/hotelsReducer";
 
 function* fetchHotelsWorker() {
-  const choosenCity = store.getState().choosenCity;
-  const checkIn = store.getState().checkIn;
-  const checkOut = store.getState().checkOut;
-
-  console.log(checkIn, checkOut);
+  const choosenCity = store.getState().hotels.choosenCity;
+  const checkIn = store.getState().hotels.checkIn;
+  const checkOut = store.getState().hotels.checkOut;
 
   const data: Action = yield call(() =>
     fetchHotels(choosenCity, checkIn, checkOut)
